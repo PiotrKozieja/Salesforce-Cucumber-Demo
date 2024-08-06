@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.example</groupId>
-  <artifactId>Salesforce-Cucumber-Demountitled</artifactId>
+  <artifactId>Salesforce-Cucumber-Demo</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>Salesforce-Cucumber-Demountitled</name>
+  <name>Salesforce-Cucumber-Demo</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -47,6 +47,13 @@
       <artifactId>selenium-chrome-driver</artifactId>
       <version>4.19.1</version>
     </dependency>
+
+    <dependency>
+      <groupId>io.github.cdimascio</groupId>
+      <artifactId>java-dotenv</artifactId>
+      <version>5.2.2</version>
+    </dependency>
+
 
   </dependencies>
 </project>
