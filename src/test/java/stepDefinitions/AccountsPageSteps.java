@@ -11,19 +11,17 @@ import org.openqa.selenium.WebDriver;
 public class AccountsPageSteps {
 
     private WebDriver driver = Hooks.driver;
+    private HomePage homePage;
     private SalesPage salesPage;
     private AccountsPage accountsPage;
+    private LoginPageSteps loginPageSteps;
 
     @Given("User is on Accounts Page")
     public void goToAccountsPage() throws InterruptedException {
-        String username = EnvConfig.get("USERNAME_SALESFORCE");
-        String password = EnvConfig.get("PASSWORD_SALESFORCE");
-
-        driver.get("https://login.salesforce.com/");
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.setUsername(username);
-        loginPage.setPassword(password);
-        HomePage homePage = loginPage.clickLoginButton();
+        loginPageSteps.provideCredentials();
+        loginPageSteps.pageSetUp();
+        loginPageSteps.isHomePageDisplayed();
+        loginPageSteps.clickLoginButton();
         salesPage = homePage.goToSalesPage();
         accountsPage = salesPage.selectAccountsPage();
     }
