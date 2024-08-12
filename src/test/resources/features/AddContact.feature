@@ -7,4 +7,5 @@ Feature: Adding new contact
     And New Contact PopUp is displayed
     And User enter contact details
     And User click Save button
-    Then New user is added
+    Then New contact is added to the list
+    And New contact details are correctly

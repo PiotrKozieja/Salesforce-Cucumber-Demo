@@ -34,10 +34,26 @@ public class ContactsPage extends BasePage{
     WebElement mailingStateForm;
     @FindBy(xpath = "//input[@autocomplete=\"country\"]")
     WebElement mailingCountryForm;
+    @FindBy(xpath = "//lightning-formatted-name[@data-output-element-id=\"output-field\"]")
+    WebElement contactName;
+    @FindBy(xpath = "//lightning-formatted-phone//a")
+    WebElement contactPhone;
+    @FindBy(xpath = "//a[@class=\"emailuiFormattedEmail\"]")
+    WebElement contactEmail;
+    @FindBy(xpath = "//a//div[@class=\"slds-truncate\"][position()=1]")
+    WebElement contactMailingStreet;
+    @FindBy(xpath = "//a//div[@class=\"slds-truncate\"][position()=2]")
+    WebElement contactMailingCityAndPostalCode;
+    @FindBy(xpath = "//a//div[@class=\"slds-truncate\"][position()=3]")
+    WebElement contactMailingStateAndMailingCountry;
 
     private final By headerTitle = By.xpath("//span[@class=\"slds-var-p-right_x-small\" and contains(text(),\"Contacts\")]");
     private final By popUpTitle = By.xpath("//h2[@class=\"header slds-modal__title slds-hyphenate slds-text-heading_medium\"and contains(text(), 'New Contact')]");
 
+    public void clickByJs(WebElement element){
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();",element);
+    }
     public ContactsPage(WebDriver driver){
         super(driver);
     }
@@ -48,9 +64,8 @@ public class ContactsPage extends BasePage{
         saveButton.click();
     }
     public void goToContactList(){
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
         WebElement contactListButton = driver.findElement(By.xpath("//nav[contains(@class,'navCenter')]//a[@title='Contacts']"));
-        executor.executeScript("arguments[0].click();", contactListButton);
+        clickByJs(contactListButton);
     }
     public boolean isContactsPageOpened(){
         return driver.findElement(headerTitle).isDisplayed();
@@ -99,7 +114,7 @@ public class ContactsPage extends BasePage{
         fillMiddleNameForm(contactData.getMiddleName());
         fillLastNameForm(contactData.getLastName());
         fillMailingStreetForm(contactData.getMailingStreet());
-        fillPostalCodeForm(contactData.getPostalCode());
+        fillPostalCodeForm(contactData.getPostalCode());;
         fillMailingCityForm(contactData.getMailingCity());
         fillMailingStateForm(contactData.getMailingState());
         fillMailingCountryForm(contactData.getMailingCountry());
@@ -108,6 +123,29 @@ public class ContactsPage extends BasePage{
         By contact = By.xpath("//th//a[@data-refid=\"recordId\" and contains(text(),'"+name+" "+middleName+" "+lastName+"')]");
         return driver.findElement(contact).isDisplayed();
     }
+    public void clickSelectedAccount(String name, String middleName, String lastName){
+        WebElement contact = driver.findElement(By.xpath("//th//a[@data-refid=\"recordId\" and contains(text(),'"+name+" "+middleName+" "+lastName+"')]"));
+        clickByJs(contact);
+    }
+    public boolean checkIsNameCorrect(ContactData contactData){
+        return contactName.getText().equals(contactData.getFirstName()+" "+contactData.getMiddleName()+" "+contactData.getLastName());
+    }
+    public boolean checkIsPhoneCorrect(ContactData contactData){
+        return contactPhone.getText().equals(contactData.getPhone());
+    }
+    public boolean checkIsEmailCorrect(ContactData contactData){
+        return contactEmail.getText().equals(contactData.getEmail());
+    }
+    public boolean checkIsMailingStreetCorrect(ContactData contactData){
+        return contactMailingStreet.getText().equals(contactData.getMailingStreet());
+    }
+    public boolean checkIsMailingCityAndPostalCodeCorrect(ContactData contactData){
+        return contactMailingCityAndPostalCode.getText().equals(contactData.getPostalCode()+" "+contactData.getMailingCity());
+    }
+    public boolean checkIsMailingStateAndMailingCountryCorrect(ContactData contactData){
+        return contactMailingStateAndMailingCountry.getText().equals(contactData.getMailingState()+" "+contactData.getMailingCountry());
+    }
+
 
 
 
