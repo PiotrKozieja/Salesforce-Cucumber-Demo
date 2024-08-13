@@ -13,8 +13,6 @@ import utilities.ContactDataGenerator;
 
 public class AddContactSteps {
     private WebDriver driver = Hooks.driver;
-    private SalesPage salesPage;
-    private AccountsPage accountsPage;
     private ContactsPage contactsPage;
     public HomePage homePage;
     public ContactDataGenerator contactDataGenerator;
@@ -60,9 +58,19 @@ public class AddContactSteps {
     public void savingNewContact(){
         contactsPage.clickSaveButton();
     }
-    @Then("New user is added")
+    @Then("New contact is added to the list")
     public void isNewUserAdded(){
         contactsPage.goToContactList();
         Assert.assertTrue(contactsPage.checkIfContactExist(contactData.getFirstName(),contactData.getMiddleName(),contactData.getLastName()));
+    }
+    @And("New contact details are correctly")
+    public void isUserDataCorrect(){
+        contactsPage.clickSelectedAccount(contactData.getFirstName(),contactData.getMiddleName(),contactData.getLastName());
+        Assert.assertTrue(contactsPage.checkIsNameCorrect(contactData));
+        Assert.assertTrue(contactsPage.checkIsPhoneCorrect(contactData));
+        Assert.assertTrue(contactsPage.checkIsEmailCorrect(contactData));
+        Assert.assertTrue(contactsPage.checkIsMailingStreetCorrect(contactData));
+        Assert.assertTrue(contactsPage.checkIsMailingCityAndPostalCodeCorrect(contactData));
+        Assert.assertTrue(contactsPage.checkIsMailingStateAndMailingCountryCorrect(contactData));
     }
 }
