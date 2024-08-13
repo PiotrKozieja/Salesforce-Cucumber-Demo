@@ -5,16 +5,26 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 
 public class BasePage {
 
     protected WebDriver driver;
+    private JavascriptExecutor executor;
+    protected WebDriverWait wait;
     private final By appLauncherButton = By.xpath("//button[@title='App Launcher']");
     private final By searchAppField = By.xpath("//input[@placeholder='Search apps and items...']");
+    private final By searchButton = By.cssSelector("button.search-button");
+    private final By mainSearchInput = By.xpath("//div[contains(@class,'assistantPanel')]//input[@type='search']");
+
     public BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        this.executor = (JavascriptExecutor) this.driver;
+        this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(10));
     }
 
     public SalesPage goToSalesPage() {
@@ -38,9 +48,33 @@ public class BasePage {
     }
 
     protected void click(WebElement element) {
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", element);
     }
 
+    protected void scrollTo(WebElement element) {
+        executor.executeScript("arguments[0].scrollIntoView(true);", element);
+    }
 
+    public void clickSearchButton() {
+        click(driver.findElement(searchButton));
+    }
+
+    public void setMainSearchInput(String value) {
+        WebElement element = driver.findElement(mainSearchInput);
+        element.clear();
+        element.sendKeys(value);
+    }
+
+    protected WebElement getSubPage(String subPageName) {
+        return driver.findElement(By.xpath("//nav[contains(@class,'navCenter')]//a[@title='" + subPageName + "']"));
+    }
+
+    protected String getInputValue(WebElement inputField) {
+        return inputField.getAttribute("value");
+    }
+
+    public CreateAccountPage selectAccountsPage() {
+        click(getSubPage("Accounts"));
+        return new CreateAccountPage(driver);
+    }
 }

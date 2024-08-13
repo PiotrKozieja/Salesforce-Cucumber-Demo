@@ -13,6 +13,8 @@ import utilities.ContactDataGenerator;
 
 public class AddContactSteps {
     private WebDriver driver = Hooks.driver;
+    private SalesPage salesPage;
+    private CreateAccountPage accountsPage;
     private ContactsPage contactsPage;
     public HomePage homePage;
     public ContactDataGenerator contactDataGenerator;
