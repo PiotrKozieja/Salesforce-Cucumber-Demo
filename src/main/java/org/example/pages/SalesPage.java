@@ -13,7 +13,10 @@ public class SalesPage extends BasePage {
         click(getSubPage("Accounts"));
         return new AccountsPage(driver);
     }
-
+    public ContactsPage selectContactsPage(){
+        click(getSubPage("Contacts"));
+        return new ContactsPage(driver);
+    }
     private WebElement getSubPage(String subPageName) {
         return driver.findElement(By.xpath("//nav[contains(@class,'navCenter')]//a[@title='" + subPageName + "']"));
     }
