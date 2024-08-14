@@ -23,23 +23,6 @@ public class AccountForm extends BasePage {
         super(driver);
     }
 
-    private WebElement getFieldByName(String inputName) {
-        return driver.findElement(By.xpath("//input[@name='" + inputName + "']"));
-    }
-
-    private WebElement getButtonByName(String labelName) {
-        return driver.findElement(By.xpath("//button[@aria-label='" + labelName + "']"));
-    }
-
-    private void selectOptionFromDropdown(String labelName, String optionName) {
-        WebElement button = getButtonByName(labelName);
-        scrollTo(button);
-        click(button);
-        WebElement option = driver.findElement(By.xpath("//div[@aria-label='" + labelName + "']//span[@title='" + optionName + "']"));
-        scrollTo(option);
-        click(option);
-    }
-
     private WebElement getAddressField(String addressType, String inputName) {
         if (Objects.equals(inputName, "street")) {
             return driver.findElement(By.xpath("//records-record-layout-item[@field-label='" + addressType + "']//textarea"));

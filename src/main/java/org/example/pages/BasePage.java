@@ -77,4 +77,22 @@ public class BasePage {
         click(getSubPage("Accounts"));
         return new CreateAccountPage(driver);
     }
+    public ContactsPage selectContactsPage() {
+        click(getSubPage("Contacts"));
+        return new ContactsPage(driver);
+    }
+    public WebElement getFieldByName(String inputName) {
+        return driver.findElement(By.xpath("//input[@name='" + inputName + "']"));
+    }
+    public WebElement getButtonByName(String labelName) {
+        return driver.findElement(By.xpath("//button[@aria-label='" + labelName + "']"));
+    }
+    public void selectOptionFromDropdown(String labelName, String optionName) {
+        WebElement button = getButtonByName(labelName);
+        scrollTo(button);
+        click(button);
+        WebElement option = driver.findElement(By.xpath("//div[@aria-label='" + labelName + "']//span[@title='" + optionName + "']"));
+        scrollTo(option);
+        click(option);
+    }
 }
