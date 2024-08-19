@@ -6,10 +6,10 @@ public class ContactData {
     private String firstName;
     private String lastName;
     private String phone;
-    private String HomePhone;
-    private String Title;
-    private String Department;
-    private String Fax;
+    private String homePhone;
+    private String title;
+    private String department;
+    private String fax;
     private String email;
     private String assistant;
     private String assistantPhone;
@@ -22,6 +22,7 @@ public class ContactData {
     private String salutation;
     private String leadSource;
     private String languageLevel;
+    private String contactId;
 
     @Override
     public boolean equals(Object o) {
@@ -31,10 +32,10 @@ public class ContactData {
         return Objects.equals(firstName, that.firstName)
                 && Objects.equals(lastName, that.lastName)
                 && Objects.equals(phone, that.phone)
-                && Objects.equals(HomePhone, that.HomePhone)
-                && Objects.equals(Title, that.Title)
-                && Objects.equals(Department, that.Department)
-                && Objects.equals(Fax, that.Fax)
+                && Objects.equals(homePhone, that.homePhone)
+                && Objects.equals(title, that.title)
+                && Objects.equals(department, that.department)
+                && Objects.equals(fax, that.fax)
                 && Objects.equals(email, that.email)
                 && Objects.equals(assistant, that.assistant)
                 && Objects.equals(assistantPhone, that.assistantPhone)
@@ -52,10 +53,10 @@ public class ContactData {
                 firstName,
                 lastName,
                 phone,
-                HomePhone,
-                Title,
-                Department,
-                Fax,
+                homePhone,
+                title,
+                department,
+                fax,
                 email,
                 assistant,
                 assistantPhone,
@@ -100,35 +101,35 @@ public class ContactData {
     }
 
     public String getHomePhone() {
-        return HomePhone;
+        return homePhone;
     }
 
     public void setHomePhone(String homePhone) {
-        HomePhone = homePhone;
+        this.homePhone = homePhone;
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
     public String getDepartment() {
-        return Department;
+        return department;
     }
 
     public void setDepartment(String department) {
-        Department = department;
+        this.department = department;
     }
 
     public String getFax() {
-        return Fax;
+        return fax;
     }
 
     public void setFax(String fax) {
-        Fax = fax;
+        this.fax = fax;
     }
 
     public String getEmail() {
@@ -216,5 +217,38 @@ public class ContactData {
 
     public void setLeadSource(String leadSource) {
         this.leadSource = leadSource;
+    }
+
+    public String getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
+    }
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", title='" + title + '\'' +
+                ", department='" + department + '\'' +
+                ", fax='" + fax + '\'' +
+                ", email='" + email + '\'' +
+                ", assistant='" + assistant + '\'' +
+                ", assistantPhone='" + assistantPhone + '\'' +
+                ", mailingStreet='" + mailingStreet + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", mailingCity='" + mailingCity + '\'' +
+                ", mailingState='" + mailingState + '\'' +
+                ", mailingCountry='" + mailingCountry + '\'' +
+                ", language='" + Language + '\'' +
+                ", salutation='" + salutation + '\'' +
+                ", leadSource='" + leadSource + '\'' +
+                ", languageLevel='" + languageLevel + '\'' +
+                ", contactId='" + contactId + '\'' +
+                '}';
     }
 }

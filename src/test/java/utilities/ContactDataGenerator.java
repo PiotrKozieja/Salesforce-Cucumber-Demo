@@ -5,14 +5,17 @@ import org.example.data.ContactData;
 import java.util.Random;
 
 public class ContactDataGenerator {
-    Random random = new Random();
-    String[] salutationOptions = {"Mr.", "Mrs.", "Ms.", "Dr.", "Prof.","Mx."};
-    String[] languageLevelOptions = {"Secondary","Tertiary","Primary"};
-    String[] leadSourceOptions = {"Web","Phone Inquiry","Partner Referral","Purchased List","Other"};
+    private static final Faker faker = new Faker();
+    private static final Random random = new Random();
 
-    public ContactData generateContactData(){
-        Faker faker = new Faker();
+    private static final String[] salutationOptions = {"Mr.", "Mrs.", "Ms.", "Dr.", "Prof.", "Mx."};
+    private static final String[] languageLevelOptions = {"Secondary", "Tertiary", "Primary"};
+    private static final String[] leadSourceOptions = {"Web", "Phone Inquiry", "Partner Referral", "Purchased List", "Other"};
+
+
+    public static ContactData generateContactData(){
         ContactData contactData = new ContactData();
+
         contactData.setFirstName(faker.name().firstName());
         contactData.setLastName(faker.name().lastName());
         contactData.setPhone(faker.phoneNumber().cellPhone());

@@ -12,19 +12,17 @@ import org.testng.Assert;
 import utilities.ContactDataGenerator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddSeveralContactsSteps {
-    private WebDriver driver = Hooks.driver;
+    private WebDriver driver;
     private SalesPage salesPage;
     private ContactsPage contactsPage;
-    public HomePage homePage;
-    public ContactForm contactForm;
-    public ContactDataGenerator contactDataGenerator= new ContactDataGenerator();
-    public ContactData contactData;
-    public ContactDetailPage contactDetailPage;
-    ArrayList<ContactData> contactList = new ArrayList<>();
+    private HomePage homePage;
+    private ContactForm contactForm;
+    private ContactDetailPage contactDetailPage;
+    private List<ContactData> contactList = new ArrayList<>();
 
-    ArrayList<ContactData> newContactsList = new ArrayList<>();
     @Given("User is logged and on Home Page")
     public void loginToAccount(){
         String username = EnvConfig.get("USERNAME_SALESFORCE");
@@ -42,15 +40,15 @@ public class AddSeveralContactsSteps {
         contactsPage = salesPage.selectContactsPage();
     }
     @Then("User creates {int} contacts with generated data")
-    public void createNewContactRecords(int numberOfNewContactRecords) throws InterruptedException {
-
+    public void createNewContactRecords(int numberOfNewContactRecords){
         contactForm = contactsPage.goToNewContactForm();
-        for(int i = 1; i<=numberOfNewContactRecords;i++){
-            contactData = contactDataGenerator.generateContactData();
+
+        for(int i = 0; i<numberOfNewContactRecords;i++){
+            ContactData contactData = ContactDataGenerator.generateContactData();
             contactList.add(contactData);
 
             contactForm.fillContactInformation(contactData);
-            if (i == numberOfNewContactRecords) {
+            if (i == numberOfNewContactRecords-1) {
                 contactDetailPage = contactForm.clickSaveButton();
             } else {
                 contactForm.clickSaveAndNewButton();
@@ -65,7 +63,7 @@ public class AddSeveralContactsSteps {
             contactDetailPage = contactsPage.getContactPageByName(contactData.getFirstName()+" "+contactData.getLastName());
             contactForm = contactDetailPage.clickEditButton();
             ContactData dataFromAccount = contactForm.getContactInformation();
-            Assert.assertEquals(dataFromAccount,contactData);
+            Assert.assertEquals(dataFromAccount,contactData,"Contact details do not match for: " + contactData.getFirstName() + " " + contactData.getLastName());
             System.out.println(dataFromAccount.getFirstName()+" "+dataFromAccount.getLastName());
         }
     }
