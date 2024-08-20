@@ -1,4 +1,4 @@
-@api
+@api @account
 Feature: Adding Account using API
 
   Scenario Outline: Create a record for Account list using Salesforce API
@@ -6,4 +6,4 @@ Feature: Adding Account using API
     Then Verify if GET Account has proper data
     Examples:
       | number |
-      | 3      |
+      | 1      |

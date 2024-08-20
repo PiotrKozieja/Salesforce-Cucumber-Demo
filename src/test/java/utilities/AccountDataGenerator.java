@@ -1,16 +1,21 @@
 package utilities;
 
 import com.github.javafaker.Faker;
+import org.example.API.AccountAPI;
 import org.example.data.Account;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class AccountDataGenerator {
 
     private static Faker faker = new Faker(new Locale("pl-PL"));
+    private static String parentName;
+    private static String parentId;
 
     public static Account generateAccount(boolean isForAPI) {
         Account generatedAccount = new Account();
@@ -18,11 +23,12 @@ public class AccountDataGenerator {
         generatedAccount.setAccountName(faker.name().fullName());
         generatedAccount.setAccountNumber(faker.idNumber().valid());
         generatedAccount.setAccountSite(faker.internet().domainName());
+        createParentAccount();
         if (isForAPI) {
-            generatedAccount.setParentAccount("001WU00000JHweAYAT");
+            generatedAccount.setParentAccount(parentId);
             generatedAccount.setExpirationDate(getJsonFormatDate());
         } else {
-            generatedAccount.setParentAccount("John Doe"); //User already exists
+            generatedAccount.setParentAccount(parentName); //User already exists
             generatedAccount.setExpirationDate(getFormatDate());
         }
         generatedAccount.setType("Customer - Channel");
@@ -72,11 +78,18 @@ public class AccountDataGenerator {
     }
 
     private static String getFormatDate() {
-        return new SimpleDateFormat("yyyy-MM-dd").format(getFeatureDate());
+        return new SimpleDateFormat("d.MM.yyyy").format(getFeatureDate());
     }
 
     private static String getJsonFormatDate() {
         return new SimpleDateFormat("yyyy-MM-dd").format(getFeatureDate());
     }
 
+    private static void createParentAccount() {
+        AccountAPI accountAPI = new AccountAPI();
+        Account parentAccount = new Account();
+        parentName = faker.name().fullName();
+        parentAccount.setAccountName(parentName);
+        parentId = accountAPI.createAccountObject(parentAccount);
+    }
 }

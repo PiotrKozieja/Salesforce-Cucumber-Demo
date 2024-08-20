@@ -1,3 +1,4 @@
+@account
 Feature: Check Account record creation functionality
 
   Scenario Outline: Create account records and verify data

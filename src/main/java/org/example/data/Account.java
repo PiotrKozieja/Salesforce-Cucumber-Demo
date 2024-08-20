@@ -333,7 +333,7 @@ public class Account {
     }
 
     public String getExpirationDate() {
-        return new SimpleDateFormat("d.MM.yyyy").format(expirationDate);
+        return expirationDate;
     }
 
     public String getNumberOfLocations() {
@@ -379,17 +379,21 @@ public class Account {
         json.put("NumberOfEmployees", numberOfEmployees); //
         json.put("Sic", sicCode);
 
-        json.put("BillingStreet", billingAddress.getStreet());
-        json.put("BillingPostalCode", billingAddress.getZipCode());
-        json.put("BillingCity", billingAddress.getCity());
-        json.put("BillingState", billingAddress.getState());
-        json.put("BillingCountry", billingAddress.getCountry());
+        if (billingAddress != null) {
+            json.put("BillingStreet", billingAddress.getStreet());
+            json.put("BillingPostalCode", billingAddress.getZipCode());
+            json.put("BillingCity", billingAddress.getCity());
+            json.put("BillingState", billingAddress.getState());
+            json.put("BillingCountry", billingAddress.getCountry());
+        }
 
-        json.put("ShippingStreet", shippingAddress.getStreet());
-        json.put("ShippingPostalCode", shippingAddress.getZipCode());
-        json.put("ShippingCity", shippingAddress.getCity());
-        json.put("ShippingState", shippingAddress.getState());
-        json.put("ShippingCountry", shippingAddress.getCountry());
+        if (shippingAddress != null) {
+            json.put("ShippingStreet", shippingAddress.getStreet());
+            json.put("ShippingPostalCode", shippingAddress.getZipCode());
+            json.put("ShippingCity", shippingAddress.getCity());
+            json.put("ShippingState", shippingAddress.getState());
+            json.put("ShippingCountry", shippingAddress.getCountry());
+        }
 
         json.put("CustomerPriority__c", customerPriority);
         json.put("SLAExpirationDate__c", expirationDate);
