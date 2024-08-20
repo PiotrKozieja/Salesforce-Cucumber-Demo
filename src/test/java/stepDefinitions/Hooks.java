@@ -12,7 +12,7 @@ import java.time.Duration;
 public class Hooks {
     public static WebDriver driver;
 
-    @Before
+    @Before("not @api")
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-search-engine-choice-screen");
@@ -22,7 +22,7 @@ public class Hooks {
         System.out.println("WebDriver Initialized: " + (driver != null));
     }
 
-    @After
+    @After("not @api")
     public void tearDown() {
         if (driver != null) {
             driver.quit();

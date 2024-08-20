@@ -1,4 +1,4 @@
-package stepDefinitions;
+package org.example.utilities;
 
 import io.github.cdimascio.dotenv.Dotenv;
 

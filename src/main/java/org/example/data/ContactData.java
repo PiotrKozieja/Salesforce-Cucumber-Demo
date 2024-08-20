@@ -1,5 +1,7 @@
 package org.example.data;
 
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 public class ContactData {
@@ -18,7 +20,7 @@ public class ContactData {
     private String mailingCity;
     private String mailingState;
     private String mailingCountry;
-    private String Language;
+    private String language;
     private String salutation;
     private String leadSource;
     private String languageLevel;
@@ -44,7 +46,7 @@ public class ContactData {
                 && Objects.equals(mailingCity, that.mailingCity)
                 && Objects.equals(mailingState, that.mailingState)
                 && Objects.equals(mailingCountry, that.mailingCountry)
-                && Objects.equals(Language, that.Language);
+                && Objects.equals(language, that.language);
     }
 
     @Override
@@ -65,15 +67,15 @@ public class ContactData {
                 mailingCity,
                 mailingState,
                 mailingCountry,
-                Language);
+                language);
     }
 
     public String getLanguage() {
-        return Language;
+        return language;
     }
 
     public void setLanguage(String language) {
-        Language = language;
+        this.language = language;
     }
 
     public String getFirstName() {
@@ -207,6 +209,7 @@ public class ContactData {
     public String getLanguageLevel() {
         return languageLevel;
     }
+
     public void setLanguageLevel(String languageLevel) {
         this.languageLevel = languageLevel;
     }
@@ -226,6 +229,7 @@ public class ContactData {
     public void setContactId(String contactId) {
         this.contactId = contactId;
     }
+
     @Override
     public String toString() {
         return "Contact{" +
@@ -244,11 +248,66 @@ public class ContactData {
                 ", mailingCity='" + mailingCity + '\'' +
                 ", mailingState='" + mailingState + '\'' +
                 ", mailingCountry='" + mailingCountry + '\'' +
-                ", language='" + Language + '\'' +
+                ", language='" + language + '\'' +
                 ", salutation='" + salutation + '\'' +
                 ", leadSource='" + leadSource + '\'' +
                 ", languageLevel='" + languageLevel + '\'' +
                 ", contactId='" + contactId + '\'' +
                 '}';
+    }
+
+    public JSONObject convertToJson() {
+
+        return new JSONObject()
+                .put("FirstName", firstName)
+                .put("LastName", lastName)
+                .put("Email", email)
+                .put("Phone", phone)
+                .put("HomePhone", homePhone)
+                .put("Title", title)
+                .put("Department", department)
+                .put("Fax", fax)
+                .put("AssistantName", assistant)
+                .put("AssistantPhone", assistantPhone)
+                .put("MailingStreet", mailingStreet)
+                .put("MailingPostalCode", postalCode)
+                .put("MailingCity", mailingCity)
+                .put("MailingState", mailingState)
+                .put("MailingCountry", mailingCountry)
+                .put("Languages__c", language)
+                .put("LeadSource", leadSource)
+                .put("Salutation", salutation)
+                .put("Level__c", languageLevel);
+    }
+
+    public static ContactData convertJsonToContact(JSONObject jsonResponse) {
+        ContactData contactData = new ContactData();
+        contactData.setFirstName(jsonResponse.optString("FirstName"));
+        contactData.setLastName(jsonResponse.optString("LastName"));
+        contactData.setPhone(jsonResponse.optString("Phone"));
+        contactData.setHomePhone(jsonResponse.optString("HomePhone"));
+        contactData.setTitle(jsonResponse.optString("Title"));
+        contactData.setDepartment(jsonResponse.optString("Department"));
+        contactData.setFax(jsonResponse.optString("Fax"));
+        contactData.setEmail(jsonResponse.optString("Email"));
+        contactData.setAssistant(jsonResponse.optString("AssistantName"));
+        contactData.setAssistantPhone(jsonResponse.optString("AssistantPhone"));
+
+        JSONObject mailingAddress = jsonResponse.optJSONObject("MailingAddress");
+        if (mailingAddress != null) {
+            contactData.setMailingStreet(mailingAddress.optString("street"));
+            contactData.setPostalCode(mailingAddress.optString("postalCode"));
+            contactData.setMailingCity(mailingAddress.optString("city"));
+            contactData.setMailingState(mailingAddress.optString("state"));
+            contactData.setMailingCountry(mailingAddress.optString("country"));
+        }
+
+        contactData.setLanguage(jsonResponse.optString("Languages__c"));
+        contactData.setSalutation(jsonResponse.optString("Salutation"));
+        contactData.setLeadSource(jsonResponse.optString("LeadSource"));
+        contactData.setLanguageLevel(jsonResponse.optString("Level__c"));
+        contactData.setContactId(jsonResponse.optString("Id"));
+
+        return contactData;
     }
 }

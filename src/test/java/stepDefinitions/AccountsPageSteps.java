@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import org.example.data.Account;
 import org.example.forms.AccountForm;
 import org.example.pages.*;
+import org.example.utilities.EnvConfig;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import utilities.AccountDataGenerator;
@@ -53,7 +54,7 @@ public class AccountsPageSteps {
     public void userCreatesAccountsWithRandomData(int numberOfAccounts) throws InterruptedException {
         accountsList = new ArrayList<>();
         for (int i = 0; i < numberOfAccounts; i++) {
-            Account account = AccountDataGenerator.generateAccount();
+            Account account = AccountDataGenerator.generateAccount(false);
             createAccountForm.fillAccountForm(account);
             accountsList.add(account);
 

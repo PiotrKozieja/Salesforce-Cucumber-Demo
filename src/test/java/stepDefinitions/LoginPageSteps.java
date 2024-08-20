@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.example.pages.HomePage;
 import org.example.pages.LoginPage;
+import org.example.utilities.EnvConfig;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 

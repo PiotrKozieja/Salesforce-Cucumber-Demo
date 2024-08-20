@@ -1,3 +1,4 @@
+@api
 Feature: Adding contact using api
   Scenario Outline: Create a several record for contact list using Salesforce API
     When <numberOfContacts> contacts details are generated

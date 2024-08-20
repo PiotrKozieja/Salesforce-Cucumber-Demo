@@ -1,10 +1,14 @@
 package org.example.data;
 
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 
 public class Account {
 
+    private String id;
     private String accountName;
     private String accountNumber;
     private String accountSite;
@@ -36,7 +40,8 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return Objects.equals(accountName, account.accountName)
+        return Objects.equals(id, account.id)
+                && Objects.equals(accountName, account.accountName)
                 && Objects.equals(accountNumber, account.accountNumber)
                 && Objects.equals(accountSite, account.accountSite)
                 && Objects.equals(parentAccount, account.parentAccount)
@@ -66,6 +71,7 @@ public class Account {
     @Override
     public int hashCode() {
         return Objects.hash(
+                id,
                 accountName,
                 accountNumber,
                 accountSite,
@@ -144,6 +150,10 @@ public class Account {
         public String getCountry() {
             return country;
         }
+    }
+
+    public void setAccountId(String id) {
+        this.id = id;
     }
 
     public void setAccountName(String accountName) {
@@ -246,6 +256,10 @@ public class Account {
         this.description = description;
     }
 
+    public String getAccountId() {
+        return id;
+    }
+
     public String getAccountName() {
         return accountName;
     }
@@ -319,7 +333,7 @@ public class Account {
     }
 
     public String getExpirationDate() {
-        return expirationDate;
+        return new SimpleDateFormat("d.MM.yyyy").format(expirationDate);
     }
 
     public String getNumberOfLocations() {
@@ -344,5 +358,101 @@ public class Account {
 
     public String getDescription() {
         return description;
+    }
+
+    public JSONObject convertToJson() {
+        JSONObject json = new JSONObject();
+
+        json.put("Name", accountName); //
+        json.put("AccountNumber", accountNumber); //
+        json.put("Site", accountSite); //
+        json.put("ParentId", parentAccount); //
+        json.put("Type", type); //
+        json.put("Industry", industry); //
+        json.put("AnnualRevenue", annualRevenue); //
+        json.put("Rating", rating); //
+        json.put("Phone", phoneNumber); //
+        json.put("Fax", faxNumber); //
+        json.put("Website", accountWebsite); //
+        json.put("TickerSymbol", tickerSymbol); //
+        json.put("Ownership", ownership); //
+        json.put("NumberOfEmployees", numberOfEmployees); //
+        json.put("Sic", sicCode);
+
+        json.put("BillingStreet", billingAddress.getStreet());
+        json.put("BillingPostalCode", billingAddress.getZipCode());
+        json.put("BillingCity", billingAddress.getCity());
+        json.put("BillingState", billingAddress.getState());
+        json.put("BillingCountry", billingAddress.getCountry());
+
+        json.put("ShippingStreet", shippingAddress.getStreet());
+        json.put("ShippingPostalCode", shippingAddress.getZipCode());
+        json.put("ShippingCity", shippingAddress.getCity());
+        json.put("ShippingState", shippingAddress.getState());
+        json.put("ShippingCountry", shippingAddress.getCountry());
+
+        json.put("CustomerPriority__c", customerPriority);
+        json.put("SLAExpirationDate__c", expirationDate);
+        json.put("NumberofLocations__c", numberOfLocations);
+        json.put("Active__c", activeOption);
+        json.put("SLA__c", slaOption);
+        json.put("SLASerialNumber__c", slaSerialNumber);
+        json.put("UpsellOpportunity__c", upsellOpportunity);
+        json.put("Description", description);
+
+
+        return json;
+    }
+
+    public static Account convertJsonToAccount(JSONObject response) {
+        Account account = new Account();
+
+        account.setAccountId(response.getString("Id"));
+        account.setAccountName(response.getString("Name"));
+        account.setAccountNumber(response.getString("AccountNumber"));
+        account.setAccountSite(response.getString("Site"));
+        account.setParentAccount(response.getString("ParentId")); // Ustawianie ParentId
+        account.setType(response.getString("Type"));
+        account.setIndustry(response.getString("Industry"));
+        account.setAnnualRevenue(String.valueOf(response.getInt("AnnualRevenue")));
+        account.setRating(response.getString("Rating"));
+        account.setPhoneNumber(response.getString("Phone"));
+        account.setFaxNumber(response.getString("Fax"));
+        account.setAccountWebsite(response.getString("Website"));
+        account.setTickerSymbol(response.getString("TickerSymbol"));
+        account.setOwnership(response.getString("Ownership"));
+        account.setNumberOfEmployees(String.valueOf(response.getInt("NumberOfEmployees")));
+        account.setSicCode(response.getString("Sic"));
+
+        // Billing Address
+        Address billingAddress = new Address(
+                response.getString("BillingStreet"),
+                response.getString("BillingPostalCode"),
+                response.getString("BillingCity"),
+                response.getString("BillingState"),
+                response.getString("BillingCountry")
+        );
+        account.setBillingAddress(billingAddress);
+
+        // Shipping Address
+        Address shippingAddress = new Address(
+                response.getString("ShippingStreet"),
+                response.getString("ShippingPostalCode"),
+                response.getString("ShippingCity"),
+                response.getString("ShippingState"),
+                response.getString("ShippingCountry")
+        );
+        account.setShippingAddress(shippingAddress);
+
+        account.setCustomerPriority(response.getString("CustomerPriority__c"));
+        account.setExpirationDate(response.getString("SLAExpirationDate__c"));
+        account.setNumberOfLocations(String.valueOf(response.getInt("NumberofLocations__c")));
+        account.setActiveOption(response.getString("Active__c"));
+        account.setSlaOption(response.getString("SLA__c"));
+        account.setSlaSerialNumber(response.getString("SLASerialNumber__c"));
+        account.setUpsellOpportunity(response.getString("UpsellOpportunity__c"));
+        account.setDescription(response.getString("Description"));
+
+        return account;
     }
 }

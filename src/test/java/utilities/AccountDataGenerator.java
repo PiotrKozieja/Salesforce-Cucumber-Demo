@@ -12,13 +12,19 @@ public class AccountDataGenerator {
 
     private static Faker faker = new Faker(new Locale("pl-PL"));
 
-    public static Account generateAccount() {
+    public static Account generateAccount(boolean isForAPI) {
         Account generatedAccount = new Account();
 
         generatedAccount.setAccountName(faker.name().fullName());
         generatedAccount.setAccountNumber(faker.idNumber().valid());
         generatedAccount.setAccountSite(faker.internet().domainName());
-        generatedAccount.setParentAccount("John Doe"); //User already exists
+        if (isForAPI) {
+            generatedAccount.setParentAccount("001WU00000JHweAYAT");
+            generatedAccount.setExpirationDate(getJsonFormatDate());
+        } else {
+            generatedAccount.setParentAccount("John Doe"); //User already exists
+            generatedAccount.setExpirationDate(getFormatDate());
+        }
         generatedAccount.setType("Customer - Channel");
         generatedAccount.setIndustry("Retail");
         generatedAccount.setAnnualRevenue(String.valueOf(faker.number().randomNumber(4, true)));
@@ -50,7 +56,6 @@ public class AccountDataGenerator {
                 )
         );
         generatedAccount.setCustomerPriority("High");
-        generatedAccount.setExpirationDate(generateFormattedDate());
         generatedAccount.setNumberOfLocations(String.valueOf(faker.number().randomNumber(2, true)));
         generatedAccount.setActiveOption("Yes");
         generatedAccount.setSlaOption("Silver");
@@ -62,9 +67,16 @@ public class AccountDataGenerator {
 
     }
 
-    private static String generateFormattedDate() {
-        Date futureDate = faker.date().future(2040, TimeUnit.DAYS);
-        return new SimpleDateFormat("d.MM.yyyy").format(futureDate);
+    private static Date getFeatureDate() {
+        return faker.date().future(2040, TimeUnit.DAYS);
+    }
+
+    private static String getFormatDate() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(getFeatureDate());
+    }
+
+    private static String getJsonFormatDate() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(getFeatureDate());
     }
 
 }
