@@ -1,3 +1,4 @@
+@contact
 Feature: Adding several contacts
   Scenario Outline: Create a several new record for contact list
     Given User is logged and on Home Page
