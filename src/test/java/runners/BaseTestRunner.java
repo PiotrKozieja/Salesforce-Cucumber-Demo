@@ -11,7 +11,8 @@ import org.testng.annotations.DataProvider;
         plugin = {"pretty","html:target/cucumber-reports/cucumber-html-report.html",
                 "json:target/cucumber-reports/cucumber-report.json",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
-        tags = "@contact")
+        monochrome = true,
+        publish = true)
 public class BaseTestRunner extends AbstractTestNGCucumberTests {
     @Override
     @DataProvider(parallel = false)

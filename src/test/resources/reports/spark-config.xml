@@ -1,0 +1,12 @@
+<extentreports>
+    <configuration>
+        <enableDashboard>true</enableDashboard>
+        <reportName>Salesforce-Cucumber-Test</reportName>
+        <theme>dark</theme>
+        <encoding>utf-8</encoding>
+        <protocol>https</protocol>
+        <timelineEnabled>true</timelineEnabled>
+        <documentTitle>Salesforce-Cucumber-Test-Report</documentTitle>
+        <timelineEnabled>true</timelineEnabled>
+    </configuration>
+</extentreports>

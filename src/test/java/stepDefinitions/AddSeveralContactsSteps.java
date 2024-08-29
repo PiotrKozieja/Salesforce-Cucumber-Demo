@@ -47,7 +47,6 @@ public class AddSeveralContactsSteps {
         for(int i = 0; i<numberOfNewContactRecords;i++){
             ContactData contactData = ContactDataGenerator.generateContactData();
             contactList.add(contactData);
-
             contactForm.fillContactInformation(contactData);
             if (i == numberOfNewContactRecords-1) {
                 contactDetailPage = contactForm.clickSaveButton();
