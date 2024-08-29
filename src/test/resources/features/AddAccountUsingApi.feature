@@ -6,4 +6,4 @@ Feature: Adding Account using API
     Then Verify if GET Account has proper data
     Examples:
       | number |
-      | 1      |
+      | 2      |

@@ -1,3 +1,4 @@
+@login
 Feature: Login feature
 
   Scenario: User login
