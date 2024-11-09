@@ -4,7 +4,7 @@
 
 ## Project Description
 
-**Salesforce Cucumber Demo** is a test automation project for a Salesforce application that leverages the **Cucumber** framework and **Gherkin** language to create readable, business-focused acceptance tests. By integrating Cucumber with **Java** and **Selenium WebDriver**, the project enables automated testing of various Salesforce functionalities, accelerating the QA process and enhancing test coverage.
+**Salesforce Cucumber Demo** is a test automation project for a Salesforce application that leverages the **Cucumber** framework, **Gherkin** language, and **Salesforce API** to automate and validate various functionalities within the Salesforce environment. By integrating **Cucumber** with **Java**, **Selenium WebDriver**, and the **Salesforce API**, this project facilitates automated testing, accelerating the QA process and enhancing test coverage across the Salesforce platform.
 
 ## Repository Contents
 
